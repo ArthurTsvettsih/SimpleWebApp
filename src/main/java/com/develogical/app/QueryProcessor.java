@@ -7,7 +7,7 @@ public class QueryProcessor {
 					"English poet, playwright, and actor, widely regarded as the greatest " +
 					"writer in the English language and the world's pre-eminent dramatist.";
 		} else if (query.toLowerCase().contains("hello world")) {
-			return "Hello World To You Too 8)";
+			return "Hello World To You Too!";
 		}
 		return "";
 	}
