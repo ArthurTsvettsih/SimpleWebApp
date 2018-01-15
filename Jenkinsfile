@@ -14,4 +14,8 @@ node {
       echo "I am testing"
       sh "./gradlew test"
    }
+   stage('GenerateDocs') {
+     echo "I am generating docs"
+     sh "./gradlew javadoc"
+   }
 }
