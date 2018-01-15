@@ -14,40 +14,40 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class WebServer {
-    @SuppressWarnings("WeakerAccess")
-    public WebServer() throws Exception {
-        Server server = new Server(8080);
+	@SuppressWarnings("WeakerAccess")
+	public WebServer() throws Exception {
+		Server server = new Server(8080);
 
-        ServletHandler handler = new ServletHandler();
-        handler.addServletWithMapping(new ServletHolder(new Website()), "/*");
-        handler.addServletWithMapping(new ServletHolder(new Api()), "/api/*");
-        server.setHandler(handler);
+		ServletHandler handler = new ServletHandler();
+		handler.addServletWithMapping(new ServletHolder(new Website()), "/*");
+		handler.addServletWithMapping(new ServletHolder(new Api()), "/api/*");
+		server.setHandler(handler);
 
-        server.start();
-    }
+		server.start();
+	}
 
-    static class Website extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            String query = req.getParameter("q");
-            if (query == null) {
-                new IndexPage().writeTo(resp);
-            } else {
-                new ResultsPage(query, new QueryProcessor().process(query)).writeTo(resp);
-            }
-        }
-    }
+	static class Website extends HttpServlet {
+		@Override
+		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+			String query = req.getParameter("q");
+			if (query == null) {
+				new IndexPage().writeTo(resp);
+			} else {
+				new ResultsPage(query, new QueryProcessor().process(query)).writeTo(resp);
+			}
+		}
+	}
 
-    static class Api extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            String query = req.getParameter("q");
-            new ApiResponse(new QueryProcessor().process(query)).writeTo(resp);
-        }
-    }
+	static class Api extends HttpServlet {
+		@Override
+		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+			String query = req.getParameter("q");
+			new ApiResponse(new QueryProcessor().process(query)).writeTo(resp);
+		}
+	}
 
-    public static void main(String[] args) throws Exception {
-        new WebServer();
-    }
+	public static void main(String[] args) throws Exception {
+		new WebServer();
+	}
 }
 
